@@ -5,9 +5,7 @@ import japgolly.scalajs.react.vdom.html_<^._
 
 object EmployeeView {
 
-  case class Props(onSave: Employee => Callback,
-                   onDelete: Callback,
-                   employee: Employee,
+  case class Props(employee: Employee,
                    edit: VdomTag)
 
   case class State(data: Employee)

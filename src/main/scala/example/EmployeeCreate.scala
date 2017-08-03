@@ -7,6 +7,8 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.html_<^._
 
+import scalacss.ScalaCssReact._
+
 object EmployeeCreate {
 
   case class Props(proxy: ModelProxy[Employees], router: RouterCtl[Pages])
@@ -32,8 +34,11 @@ object EmployeeCreate {
 
     def render(p: Props, s: State): VdomElement = {
       <.div(
-        <.p(s.emp.toString),
-        <.p("Creating a new employee!"),
+        <.div(
+          Styles.appHeader,
+          <.p(s.emp.toString),
+          <.p("Creating a new employee!")
+        ),
         <.form(
           <.div(
             ^.className := "form-group",
@@ -64,10 +69,10 @@ object EmployeeCreate {
           )
         ),
         <.button("Create",
-            ^.className := "btn btn-success",
+            Styles.buttonSuccess,
             ^.onClick --> {  AppCircuit.dispatch(AddEmployee(s.emp)); p.router.set(HomeP) }
         ),
-        p.router.link(HomeP)("Back to Home", ^.className := "btn btn-default")
+        p.router.link(HomeP)("Back to Home", Styles.buttonDefault)
       )
     }
 

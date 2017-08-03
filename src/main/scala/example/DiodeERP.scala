@@ -17,6 +17,9 @@ import diode.react.ReactConnectProxy
 import scala.scalajs.js.typedarray.TypedArrayBufferOps._
 import scala.scalajs.js.typedarray._
 
+import CssSettings._
+import scalacss.ScalaCssReact._
+
 @JSExportTopLevel("DiodeERP")
 object DiodeERP extends JSApp {
 
@@ -38,6 +41,7 @@ object DiodeERP extends JSApp {
     override def main(): Unit = {
         val router = Router(baseUrl, routerConfig)
         AppCircuit.dispatch(InitEmployees)
+        Styles.addToDocument()
         router().renderIntoDOM(dom.document.getElementsByClassName("app")(0).domAsHtml)
     }
 }

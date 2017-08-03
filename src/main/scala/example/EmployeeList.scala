@@ -8,6 +8,8 @@ import japgolly.scalajs.react.vdom.html_<^._
 import org.scalajs.dom.ext.KeyCode
 import java.util.UUID
 
+import scalacss.ScalaCssReact._
+
 
 object EmployeeList {
 
@@ -18,21 +20,15 @@ object EmployeeList {
     class Backend($ : BackendScope[Props, State]) {
         def mounted(props: Props) = Callback {}
 
-        def editingDone(): Callback =
-            $.modState(_.copy(editing = None))
-
-        val startEditing: EmployeeId => Callback =
-            id => $.modState(_.copy(editing = Some(id)))
-
         def render(p: Props, s: State) = {
             val proxy = p.proxy()
             val dispatch: Action => Callback = p.proxy.dispatchCB
             val employees = proxy.employeeList
             
             <.div(
-                <.h1("Employees"),
+                <.h1("Employees", Styles.header),
                 <.header(
-                    p.router.link(EmployeeCreateP)("Create", ^.className := "btn btn-success")
+                    p.router.link(EmployeeCreateP)("Create", Styles.mainCreateButton)
                 ),
                 employeeList(dispatch, employees, p.router).when(employees.nonEmpty)
             )
@@ -44,10 +40,8 @@ object EmployeeList {
                     employees.toTagMod(
                         emp =>
                             EmployeeView(EmployeeView.Props(
-                              onSave = e => dispatch(Update(e)),
-                              onDelete = dispatch(Delete(emp.id)),
                               employee = emp,
-                              router.link(EmployeeEditP(emp.id.toString))("Edit", ^.className := "btn btn-primary")
+                              router.link(EmployeeEditP(emp.id.toString))("Edit", Styles.buttonPrimary)
                             )
                         )
                     )

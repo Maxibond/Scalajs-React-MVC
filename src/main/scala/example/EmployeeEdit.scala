@@ -5,6 +5,8 @@ import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.html_<^._
 import java.util.UUID
 
+import scalacss.ScalaCssReact._
+
 object EmployeeEdit {
 
   case class Props(employeeId: UUID, router: RouterCtl[Pages])
@@ -31,13 +33,17 @@ object EmployeeEdit {
     def render(p: Props, s: State): VdomElement = {
       if (s.emp.isEmpty) {
         <.div(
-          <.span("Not Found"),
-          p.router.link(HomeP)("Back to Home")
+          Styles.appHeader,
+          <.p("Not Found"),
+          p.router.link(HomeP)("Back to Home", Styles.buttonDefault)
         )
       } else {
         <.div(
-          <.p(p.employeeId.toString),
-          <.p(s.emp.get.toString),
+          <.div(
+            Styles.appHeader,
+            <.p(p.employeeId.toString),
+            <.p(s.emp.get.toString)
+          ),
           <.form(
             <.div(
               ^.className := "form-group",
@@ -67,15 +73,15 @@ object EmployeeEdit {
               )
             ),
             <.button("Save",
-              ^.className := "btn btn-success",
+              Styles.buttonSuccess,
               ^.onClick --> { AppCircuit.dispatch(Update(s.emp.get)); p.router.set(HomeP) }
-            )
-          ),
-          <.button("Delete",
-            ^.className := "btn btn-danger",
-            ^.onClick --> { AppCircuit.dispatch(Delete(s.emp.get.id)); p.router.set(HomeP) }
-          ),
-          p.router.link(HomeP)("Back to Home", ^.className := "btn btn-default")
+            ),
+            <.button("Delete",
+              Styles.buttonDanger,
+              ^.onClick --> { AppCircuit.dispatch(Delete(s.emp.get.id)); p.router.set(HomeP) }
+            ),
+            p.router.link(HomeP)("Back to Home", Styles.buttonDefault)
+          )
         )
       }
     }
