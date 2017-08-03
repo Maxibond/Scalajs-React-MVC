@@ -27,10 +27,11 @@ object Styles extends StyleSheet.Inline {
   )
 
   val header = style(
-    textAlign.center
+    textAlign.center,
+    textDecoration := "underline"
   )
 
-  private val button = style(
+  private val button = mixin(
     addClassName("btn"),
     textAlign.center,
     marginRight(10 px)
